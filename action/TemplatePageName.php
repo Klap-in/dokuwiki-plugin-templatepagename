@@ -7,31 +7,32 @@
  */
 
 // must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
+use dokuwiki\Extension\ActionPlugin;
+use dokuwiki\Extension\Event;
+use dokuwiki\Extension\EventHandler;
 
 /**
  * Class action_plugin_templatepagename_TemplatePageName
  */
-class action_plugin_templatepagename_TemplatePageName extends DokuWiki_Action_Plugin {
+class action_plugin_templatepagename_TemplatePageName extends ActionPlugin {
 
     /**
      * Registers a callback function for a given event
      *
-     * @param Doku_Event_Handler $controller
+     * @param EventHandler $controller
      */
-    public function register(Doku_Event_Handler $controller) {
+    public function register(EventHandler $controller) {
 
-        $controller->register_hook('COMMON_PAGETPL_LOAD', 'BEFORE', $this, 'handle_common_pagetpl_load');
+        $controller->register_hook('COMMON_PAGETPL_LOAD', 'BEFORE', $this, 'handleCommonPagetplLoad');
 
     }
 
     /**
      * Adjust the pagetemplate names
      *
-     * @param Doku_Event $event
-     * @param $param
+     * @param Event $event
      */
-    public function handle_common_pagetpl_load(Doku_Event $event, $param) {
+    public function handleCommonPagetplLoad(Event $event) {
         global $conf;
 
         // from here is it almost the same code as inc/common.php pageTemplate
